@@ -196,3 +196,19 @@ footer {
     justify-content: space-between;
     margin: 20px 0;
 }
+
+.tag-filters {
+    position: absolute;
+    top: 95px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.tag-filters .tag-filter {
+    background: var(--white);
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+}

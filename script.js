@@ -53,6 +53,9 @@ const itemsContainer = document.querySelector('#shop-items');
 const itemTemplate = document.querySelector('#item-template');
 const nothingFound = document.querySelector('#nothing-found');
 
+const tagsFilter = document.querySelector('.tag-filters');
+let arrTags = [];
+
 function prepareShopItem(shopItem) {
     const { title, description, tags, img, price, rating } = shopItem;
     const item = itemTemplate.content.cloneNode(true);
@@ -76,6 +79,7 @@ function prepareShopItem(shopItem) {
         element.textContent = tag;
         element.classList.add('tag');
         tagsHolder.append(element);
+        arrTags.push(tag);
     });
 
     return item;
@@ -86,6 +90,7 @@ let currentState = [...items];
 function renderItems(arr) {
     nothingFound.textContent = '';
     itemsContainer.innerHTML = '';
+
     arr.forEach((item) => {
         itemsContainer.append(prepareShopItem(item));
     });
@@ -96,6 +101,17 @@ function renderItems(arr) {
 }
 
 renderItems(currentState.sort((a, b) => sortByAlphabet(a, b)));
+
+arrTags.sort();
+arrTags.push('все');
+const arrFilter = [...new Set(arrTags)];
+
+arrFilter.forEach((tag) => {
+    const element = document.createElement('span');
+    element.textContent = tag;
+    element.classList.add('tag-filter');
+    tagsFilter.append(element);
+});
 
 function sortByAlphabet(a, b) {
     if (a.title > b.title) {
@@ -158,3 +174,33 @@ function applySearch() {
 
 searchButton.addEventListener('click', applySearch);
 searchInput.addEventListener('search', applySearch);
+
+const tagElement = document.querySelectorAll('.tag-filter');
+
+tagElement.forEach(item => {
+    item.addEventListener('click', () => {
+        tagElement.forEach(item => {
+            item.classList.remove('tag-active');
+        });
+
+        item.classList.add('tag-active');
+
+        const activTag = document.querySelector('.tag-active');
+
+        if (activTag.textContent === 'все') {
+            currentState = [...items];
+        } else {
+
+            currentState = items.filter((el) =>
+                el.tags.includes(activTag.textContent)
+            );
+        }
+
+        currentState.sort((a, b) => sortByAlphabet(a, b));
+
+        sortControl.selectedIndex = 0;
+
+        renderItems(currentState);
+    });
+
+});
