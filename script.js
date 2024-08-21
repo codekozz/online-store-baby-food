@@ -191,8 +191,8 @@ tagElement.forEach(item => {
             currentState = [...items];
         } else {
 
-            currentState = items.filter((el) =>
-                el.tags.includes(activTag.textContent)
+            currentState = items.filter((element) =>
+                element.tags.includes(activTag.textContent)
             );
         }
 
