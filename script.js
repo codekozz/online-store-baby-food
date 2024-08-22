@@ -54,7 +54,7 @@ const itemTemplate = document.querySelector('#item-template');
 const nothingFound = document.querySelector('#nothing-found');
 
 const tagsFilter = document.querySelector('.tag-filters');
-let arrTags = [];
+const arrTags = [];
 
 function prepareShopItem(shopItem) {
     const { title, description, tags, img, price, rating } = shopItem;
